@@ -180,6 +180,11 @@ class CameraViewModule(reactContext: ReactApplicationContext) : ReactContextBase
           else null
           val fpsRanges = characteristics.get(CameraCharacteristics.CONTROL_AE_AVAILABLE_TARGET_FPS_RANGES)!!
 
+          // new priadi
+          val compensationRanges = characteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_RANGE)!!
+          val compensationStep = characteristics.get(CameraCharacteristics.CONTROL_AE_COMPENSATION_STEP)!!
+          // end
+
           val supportsHdr = extensionsManager.isExtensionAvailable(cameraSelector, ExtensionMode.HDR)
           val supportsLowLightBoost = extensionsManager.isExtensionAvailable(cameraSelector, ExtensionMode.NIGHT)
           // see https://developer.android.com/reference/android/hardware/camera2/CameraDevice#regular-capture
@@ -190,6 +195,11 @@ class CameraViewModule(reactContext: ReactApplicationContext) : ReactContextBase
           val map = Arguments.createMap()
           map.putString("id", id)
           map.putArray("devices", deviceTypes)
+          // new priadi
+          map.putInt("compensationLower", compensationRanges.lower)
+          map.putInt("compensationUpper", compensationRanges.upper)
+          map.putDouble("compensationStep", compensationStep.toDouble())
+          // end
           map.putString("position", parseLensFacing(lensFacing))
           map.putString("name", name ?: "${parseLensFacing(lensFacing)} ($id)")
           map.putBoolean("hasFlash", hasFlash)

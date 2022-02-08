@@ -3,12 +3,12 @@ package com.mrousavy.camera
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
 import com.facebook.react.common.MapBuilder
-import com.facebook.react.uimanager.ViewGroupManager
+import com.facebook.react.uimanager.SimpleViewManager
 import com.facebook.react.uimanager.ThemedReactContext
 import com.facebook.react.uimanager.annotations.ReactProp
 
 @Suppress("unused")
-class CameraViewManager(reactContext: ReactApplicationContext) : ViewGroupManager<CameraView>() {
+class CameraViewManager(reactContext: ReactApplicationContext) : SimpleViewManager<CameraView>() {
 
   public override fun createViewInstance(context: ThemedReactContext): CameraView {
     val cameraViewModule = context.getNativeModule(CameraViewModule::class.java)!!
@@ -170,6 +170,13 @@ class CameraViewManager(reactContext: ReactApplicationContext) : ViewGroupManage
     if (view.orientation != orientation)
       addChangedPropToTransaction(view, "orientation")
     view.orientation = orientation
+  }
+
+  @ReactProp(name = "compensation")
+  fun setOrientation(view: CameraView, compensation: Int) {
+    if (view.compensation != compensation)
+      addChangedPropToTransaction(view, "compensation")
+    view.compensation = compensation
   }
 
   companion object {

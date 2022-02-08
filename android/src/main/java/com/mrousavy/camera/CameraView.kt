@@ -82,6 +82,7 @@ class CameraView(context: Context, private val frameProcessorThread: ExecutorSer
   var enableDepthData = false
   var enableHighQualityPhotos: Boolean? = null
   var enablePortraitEffectsMatteDelivery = false
+  var compensation = 0
   // use-cases
   var photo: Boolean? = null
   var video: Boolean? = null
@@ -328,6 +329,9 @@ class CameraView(context: Context, private val frameProcessorThread: ExecutorSer
           val zoomClamped = max(min(zoom, maxZoom), minZoom)
           camera!!.cameraControl.setZoomRatio(zoomClamped)
         }
+
+        camera!!.cameraControl.setExposureCompensationIndex(compensation)
+
         if (shouldReconfigureTorch) {
           camera!!.cameraControl.enableTorch(torch == "on")
         }
